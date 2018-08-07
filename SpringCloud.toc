@@ -1,0 +1,5 @@
+\contentsline {chapter}{\numberline {1}میکروسرویس‌ها، ابر و چیزهای دیگر}{5}{chapter.1}
+\contentsline {section}{\numberline {1‏.‏1}میکروسرویس چیست؟}{5}{section.1.1}
+\contentsline {section}{\numberline {1‏.‏2}محاسبات ابری چیست؟}{7}{section.1.2}
+\contentsline {section}{\numberline {1‏.‏3}چرا ابر؟}{7}{section.1.3}
+\contentsline {chapter}{\numberline {2}کنترل پیکربندی‌ها}{9}{chapter.2}
