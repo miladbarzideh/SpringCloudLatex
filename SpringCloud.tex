@@ -12,8 +12,35 @@
 \usepackage[svgnames]{xcolor} % Required for colour specification
 \newcommand*{\plogo}{\fbox{$\mathcal{MB}$}} % Generic dummy publisher logo
 
-\usepackage{tikz,lipsum,lmodern}
+\usepackage{tikz,lmodern}
 \usepackage[most]{tcolorbox}
+
+\usepackage{listings}
+
+\definecolor{verde}{rgb}{0.25,0.5,0.35}
+\definecolor{jpurple}{rgb}{0.5,0,0.35}
+\definecolor{darkgreen}{rgb}{0.0, 0.2, 0.13}
+
+\newcommand{\estiloJava}{
+	\lstset{
+		language=Java,
+		basicstyle=\ttfamily\small,
+		keywordstyle=\color{jpurple}\bfseries,
+		stringstyle=\color{red},
+		commentstyle=\color{verde},
+		morecomment=[s][\color{blue}]{/**}{*/},
+		extendedchars=true,
+		showspaces=false,
+		showstringspaces=false,
+		numbers=left,
+		numberstyle=\tiny,
+		breaklines=true,
+		backgroundcolor=\color{cyan!10},
+		breakautoindent=true,
+		captionpos=t,
+		xleftmargin=0pt,
+		tabsize=2
+}}
 
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
@@ -177,15 +204,66 @@
 
 این مشکل در برنامه‌های تحت ابر بیشتر خود را نشان می‌دهد، از آن‌جا که ممکن است این برنامه‌ها از صدها میکروسرویس با چندین نمونه‌ی در حال اجرا تشکیل شده باشند، مدیریت پیکربندی برنامه بسیار مشکل است. برای همین توسعه‌ی میکروسرویس‌های تحت ابر روی موارد زیر تاکید دارد:
 \begin{enumerate}
-	\item جداسازی پیکربندی برنامه از کدهای اصلی برنامه که باید مستقر شوند.
+	\item جداسازی پیکربندی برنامه از کدهای اصلی برنامه
 	\item تزریق اطلاعات مربوط به پیکربندی برنامه در زمان راه‌اندازی سرور با استفاده از یک مخرن مرکزی به میکروسرویس‌‌های برنامه.
 \end{enumerate}
 
 
 \section{معماری مدیریت پیکربندی}
 
+همان‌طور که گفته شد لودشدن پیکربندی باید در راه‌‌اندازی\LTRfootnote{Bootstrapping} میکروسرویس‌ها انجام شود. 
+شکل \ref{fig:2} نقش مهم سرویس پیکربندی را برای راه‌اندازی میکروسرویس‌ها نشان می‌دهد:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{2.png}
+	\caption{معماری مفهومی مدیریت پیکربندی‌ها}
+	\label{fig:2}
+\end{figure}
+
+\begin{enumerate}
+	\item
+	قبل از اینکه یک نمونه از میکروسرویس بالا بیاید باید یک \lr{endpoint} را برای خواندن اطلاعات پیکربندی مربوط به خود صدا بزند. اطلاعات لازم برای فراخوانی \lr{endpoint} هنگام راه‌اندازی سرویس به آن پاس داده می‌شود.
+	\item
+	مخزن پیکربندی می‌تواند با استفاده از گیت، پایگاه‌داده‌های رابطه‌ای یا کلید-مقدار پیاده‌سازی شود.
+	\item
+	مدیریت داده‌های پیکربندی باید مستقل از چگونگی استقرار برنامه باشد.
+	\item
+	وقتی اطلاعات پیکربندی تغییر یابد؛ سرویس‌هایی که از آن اطلاعات استفاده می‌کنند باید از تغییر آگاه شوند و داده‌های خود را بروز کنند.
+\end{enumerate}
+
+
 
 \section{روش‌های پیاده‌سازی}
+برای پیاده‌سازی مدیریت پیکربندی پروژه‌های متن‌باز زیادی وجود دارد. شکل  \ref{fig:3}  برخی از آن‌ها را نشان می‌دهد.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{3.png}
+	\caption{روش‌های پیاده‌سازی مدیریت پیکربندی}
+	\label{fig:3}
+\end{figure}
+
+در اینجا از \lr{Spring Cloud configuration server} استفاده می‌شود. این روش نسبت به روش‌های دیگر ساده‌تر است، به خوبی  با \lr{Spring Boot}  ادغام می‌شود و از گزینه‌های بیشتری برای ذخیره داده‌های پیکربندی پشتیبانی می‌کند. 
+
+\section{پیاده‌سازی \lr{Spring Cloud configuration server}} 
+
+\lr{configuration server}
+یک برنامه‌ی \lr{REST-based} است که روی \lr{Spring Boot} ساخته می‌شود. کدهای \ref{lst:1}
+فایل \lr{pom.xml} را برای ساخت این سرویس نشان می‌دهند. 
+
+
+\begin{latin}
+	\begin{scriptsize}
+		\estiloJava
+		\lstinputlisting[language=xml,firstline=0, lastline=56,caption= pom.xml, label=lst:1]{codes/config-server.xml}
+	\end{scriptsize}
+\end{latin}
+
+در فایل \lr{Maven} بالا،‌ ابتدا نسخه‌ای از  \lr{Spring Boot} که در میکروسرویس‌ها از آن  استفاده می‌شود، مشخص شده است.  قسمت مهم بعدی  (خطوط 11-16) مشخص کردن نسخه‌ی \lr{Spring Cloud} است. \lr{Spring Cloud} شامل مجموعه‌ای از پروژه‌های مستقل است که هر کدام نسخه‌های مربوط به خود را دارند. با استفاده از این تعریف، تضمین می‌شود که از زیرپروژه‌های سازگار با هم در \lr{Spring Cloud} استفاده شود. قسمت بعدی مشخص کردن وابستگی‌های ...
+
+
+
 
 
 \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black]
