@@ -1,8 +1,12 @@
 \BOOKMARK [0][-]{chapter.1}{میکروسرویس‌ها، ابر و چیزهای دیگر}{}% 1
 \BOOKMARK [1][-]{section.1.1}{میکروسرویس چیست؟}{chapter.1}% 2
 \BOOKMARK [1][-]{section.1.2}{محاسبات ابری چیست؟}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{چرا ابر؟}{chapter.1}% 4
-\BOOKMARK [0][-]{chapter.2}{کنترل پیکربندی‌ها}{}% 5
-\BOOKMARK [1][-]{section.2.1}{معماری مدیریت پیکربندی}{chapter.2}% 6
-\BOOKMARK [1][-]{section.2.2}{روش‌های پیاده‌سازی}{chapter.2}% 7
-\BOOKMARK [1][-]{section.2.3}{پیاده‌سازی Spring Cloud configuration server}{chapter.2}% 8
+\BOOKMARK [1][-]{section.1.3}{معماری لایه‌ای محاسبات ابری}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.3.1}{ نرم‌افزار به عنوان سرویس}{section.1.3}% 5
+\BOOKMARK [2][-]{subsection.1.3.2}{ پلتفرم به عنوان سرویس}{section.1.3}% 6
+\BOOKMARK [2][-]{subsection.1.3.3}{ زیرساخت به عنوان سرویس}{section.1.3}% 7
+\BOOKMARK [1][-]{section.1.4}{چرا ابر؟}{chapter.1}% 8
+\BOOKMARK [0][-]{chapter.2}{کنترل پیکربندی‌ها}{}% 9
+\BOOKMARK [1][-]{section.2.1}{معماری مدیریت پیکربندی}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.2}{روش‌های پیاده‌سازی}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.3}{پیاده‌سازی Spring Cloud configuration server}{chapter.2}% 12
